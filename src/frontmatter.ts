@@ -1,4 +1,4 @@
-import type { ParsedMarkdown } from './types'
+import type { JsonObject, JsonValue, ParsedMarkdown } from './types'
 import * as yaml from './yaml'
 
 /**
@@ -12,12 +12,12 @@ const FRONTMATTER_REGEX_ALT = /^\+\+\+\r?\n([\s\S]*?)\r?\n\+\+\+\r?\n/
 /**
  * Parse markdown with frontmatter
  */
-export function parse<T = Record<string, any>>(content: string): ParsedMarkdown<T> {
+export function parse<T = JsonObject>(content: string): ParsedMarkdown<T> {
   const original = content
 
   // Try YAML frontmatter (---)
   let match = content.match(FRONTMATTER_REGEX)
-  let data: any = {}
+  let data: T = {} as T
   let matter: string | undefined
   let markdown = content
 
@@ -48,8 +48,8 @@ export function parse<T = Record<string, any>>(content: string): ParsedMarkdown<
 /**
  * Simple TOML parser for frontmatter
  */
-function parseToml(content: string): Record<string, any> {
-  const result: Record<string, any> = {}
+function parseToml(content: string): JsonObject {
+  const result: JsonObject = {}
   const lines = content.split('\n')
 
   for (const line of lines) {
@@ -77,7 +77,7 @@ function parseToml(content: string): Record<string, any> {
 /**
  * Parse TOML value
  */
-function parseTomlValue(value: string): any {
+function parseTomlValue(value: string): JsonValue {
   // Remove quotes
   if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith('\'') && value.endsWith('\''))) {
     return value.substring(1, value.length - 1)
@@ -109,7 +109,7 @@ function parseTomlValue(value: string): any {
 /**
  * Stringify data to frontmatter markdown
  */
-export function stringify<T = Record<string, any>>(
+export function stringify<T extends JsonObject = JsonObject>(
   data: T,
   content: string,
   format: 'yaml' | 'toml' = 'yaml',
@@ -127,7 +127,7 @@ export function stringify<T = Record<string, any>>(
 /**
  * Stringify object to TOML format
  */
-function stringifyToml(obj: any): string {
+function stringifyToml(obj: JsonObject): string {
   const lines: string[] = []
 
   for (const [key, value] of Object.entries(obj)) {

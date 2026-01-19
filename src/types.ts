@@ -1,4 +1,14 @@
 /**
+ * JSON-compatible value types that YAML/TOML parsers can produce
+ */
+export type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue }
+
+/**
+ * JSON-compatible object type
+ */
+export type JsonObject = { [key: string]: JsonValue }
+
+/**
  * Markdown parsing options
  */
 export interface MarkdownOptions {
@@ -25,7 +35,7 @@ export interface MarkdownOptions {
 /**
  * Parsed markdown with frontmatter
  */
-export interface ParsedMarkdown<T = Record<string, any>> {
+export interface ParsedMarkdown<T = JsonObject> {
   /** Parsed frontmatter data */
   data: T
   /** Markdown content (without frontmatter) */

@@ -1,4 +1,4 @@
-import type { YamlOptions } from './types'
+import type { JsonObject, JsonValue, YamlOptions } from './types'
 
 /**
  * Fast, native YAML parser powered by Bun's first-class YAML support
@@ -6,9 +6,40 @@ import type { YamlOptions } from './types'
  */
 
 /**
+ * Convert YAML 1.1 boolean aliases to actual booleans
+ * YAML 1.2 doesn't include yes/no/on/off as booleans, but YAML 1.1 does
+ */
+function convertYaml11Booleans(obj: unknown): unknown {
+  if (obj === null || obj === undefined) {
+    return obj
+  }
+
+  if (typeof obj === 'string') {
+    const lower = obj.toLowerCase()
+    if (lower === 'yes' || lower === 'on') return true
+    if (lower === 'no' || lower === 'off') return false
+    return obj
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(convertYaml11Booleans)
+  }
+
+  if (typeof obj === 'object') {
+    const result: Record<string, unknown> = {}
+    for (const [key, value] of Object.entries(obj)) {
+      result[key] = convertYaml11Booleans(value)
+    }
+    return result
+  }
+
+  return obj
+}
+
+/**
  * Parse YAML string to JavaScript object
  */
-export function parse<T = any>(input: string, options: YamlOptions = {}): T {
+export function parse<T = JsonObject>(input: string, options: YamlOptions = {}): T {
   const strict = options.strict ?? false
 
   try {
@@ -21,15 +52,17 @@ export function parse<T = any>(input: string, options: YamlOptions = {}): T {
     }
 
     // Use Bun's native YAML parser for optimal performance
-    const result = Bun.YAML.parse(content)
+    let result = Bun.YAML.parse(content)
 
     // Bun.YAML.parse returns an array for multi-document YAML
     // If it's a single document, return the first element
     if (Array.isArray(result) && result.length === 1) {
-      return result[0] as T
+      result = result[0]
     }
 
-    return result as T
+    // Convert YAML 1.1 boolean aliases (yes/no/on/off) to actual booleans
+    // for compatibility with libraries that expect YAML 1.1 behavior
+    return convertYaml11Booleans(result) as T
   }
   catch (error) {
     if (strict) {
@@ -43,8 +76,10 @@ export function parse<T = any>(input: string, options: YamlOptions = {}): T {
 /**
  * Fallback parser for edge cases (kept for compatibility)
  * @internal
+ * Note: Uses permissive internal typing for dynamic object construction
+ * The public API (parse function) provides proper typing through generics
  */
-function _parseFallback<T = any>(input: string, _options: YamlOptions = {}): T {
+function _parseFallback<T = JsonObject>(input: string, _options: YamlOptions = {}): T {
   const strict = _options.strict ?? false
 
   try {
@@ -56,7 +91,10 @@ function _parseFallback<T = any>(input: string, _options: YamlOptions = {}): T {
 
     // Split into lines for processing
     const lines = content.split('\n')
-    const result: any = {}
+    // Internal parser uses permissive types for dynamic object construction
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result: Record<string, any> = {}
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const stack: Array<{ obj: any, indent: number, key?: string }> = [{ obj: result, indent: -1 }]
 
     const _currentIndent = 0
@@ -180,15 +218,17 @@ function _parseFallback<T = any>(input: string, _options: YamlOptions = {}): T {
     }
 
     // Clean up empty objects that should be null
-    function cleanupEmptyObjects(obj: any) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function cleanupEmptyObjects(obj: Record<string, any>): void {
       for (const key in obj) {
-        if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
-          const keys = Object.keys(obj[key])
+        const value = obj[key]
+        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+          const keys = Object.keys(value)
           if (keys.length === 0) {
             obj[key] = null
           }
           else {
-            cleanupEmptyObjects(obj[key])
+            cleanupEmptyObjects(value)
           }
         }
       }
@@ -209,7 +249,7 @@ function _parseFallback<T = any>(input: string, _options: YamlOptions = {}): T {
 /**
  * Parse a YAML value to its appropriate JavaScript type
  */
-function parseValue(value: string): any {
+function parseValue(value: string): JsonValue {
   // Handle null
   if (value === 'null' || value === '~' || value === '') {
     return null
@@ -245,7 +285,7 @@ function parseValue(value: string): any {
   // Handle objects in flow style
   if (value.startsWith('{') && value.endsWith('}')) {
     const content = value.substring(1, value.length - 1)
-    const obj: any = {}
+    const obj: JsonObject = {}
     const pairs = content.split(',')
     for (const pair of pairs) {
       const colonIndex = pair.indexOf(':')
@@ -265,7 +305,7 @@ function parseValue(value: string): any {
 /**
  * Stringify JavaScript object to YAML
  */
-export function stringify(obj: any, _options: YamlOptions = {}): string {
+export function stringify(obj: JsonValue, _options: YamlOptions = {}): string {
   try {
     // Use Bun's native YAML stringify with block-style formatting (2 spaces)
     return Bun.YAML.stringify(obj, null, 2)
@@ -280,14 +320,14 @@ export function stringify(obj: any, _options: YamlOptions = {}): string {
  * Fallback stringify for edge cases
  * @internal
  */
-function stringifyFallback(obj: any, indent: number): string {
+function stringifyFallback(obj: JsonValue, indent: number): string {
   return stringifyValue(obj, indent)
 }
 
 /**
  * Recursively stringify a value to YAML format
  */
-function stringifyValue(value: any, indent: number): string {
+function stringifyValue(value: JsonValue, indent: number): string {
   const spaces = ' '.repeat(indent)
 
   if (value === null || value === undefined) {
