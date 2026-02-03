@@ -76,12 +76,12 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "better-dx": "^0.2.3",
+    "better-dx": "^0.2.5",
     "gray-matter": "^4.0.3",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "markdown-it": "^14.1.0",
-    "marked": "^17.0.0",
-    "mitata": "^1.0.10",
+    "marked": "^17.0.1",
+    "mitata": "^1.0.34",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "showdown": "^2.1.0"
