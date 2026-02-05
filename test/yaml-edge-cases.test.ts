@@ -10,7 +10,7 @@ level1:
       level4:
         value: deep
 `
-    const result = parse(yaml)
+    const result = parse<any>(yaml)
 
     expect(result.level1.level2.level3.level4.value).toBe('deep')
   })
@@ -30,7 +30,7 @@ config:
         - ssl
         - compression
 `
-    const result = parse(yaml)
+    const result = parse<any>(yaml)
 
     expect(result.config.servers).toHaveLength(2)
     expect(result.config.servers[0].name).toBe('server1')
@@ -167,7 +167,7 @@ mixed: mixed whitespace`
     const items = Array.from({ length: 100 }, (_, i) => `  - item${i}`)
     const yaml = `items:\n${items.join('\n')}`
 
-    const result = parse(yaml)
+    const result = parse<any>(yaml)
 
     expect(result.items).toHaveLength(100)
     expect(result.items[0]).toBe('item0')
@@ -235,7 +235,7 @@ negative: -2.5e-3
 
   it('should handle inline objects', () => {
     const yaml = 'config: {name: test, value: 123}'
-    const result = parse(yaml)
+    const result = parse<any>(yaml)
 
     expect(result.config.name).toBe('test')
     expect(result.config.value).toBe(123)

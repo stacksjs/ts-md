@@ -57,6 +57,14 @@ export interface YamlOptions {
 }
 
 /**
+ * Binary CLI configuration
+ */
+export interface BinaryConfig {
+  from: string
+  verbose: boolean
+}
+
+/**
  * Token types for markdown parsing
  */
 export interface Token {

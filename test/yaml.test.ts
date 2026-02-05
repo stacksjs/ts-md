@@ -24,7 +24,7 @@ person:
     street: 123 Main St
     city: New York
 `
-    const result = parse(yaml)
+    const result = parse<any>(yaml)
 
     expect(result.person.name).toBe('John')
     expect(result.person.age).toBe(30)

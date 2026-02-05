@@ -1,5 +1,5 @@
 {
-  "name": "ts-md",
+  "name": "@stacksjs/ts-md",
   "type": "module",
   "version": "0.2.0",
   "description": "A fast, native Bun-powered markdown parser with frontmatter support. Replaces gray-matter, marked, and yaml.",
@@ -85,13 +85,5 @@
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "showdown": "^2.1.0"
-  },
-  "git-hooks": {
-    "pre-commit": {
-      "staged-lint": {
-        "*.{js,ts,json,yaml,yml,md}": "echo 'No linting for now'"
-      }
-    },
-    "commit-msg": "bunx gitlint --edit .git/COMMIT_EDITMSG"
   }
 }
