@@ -1,5 +1,5 @@
 {
-  "name": "@stacksjs/ts-md",
+  "name": "ts-md",
   "type": "module",
   "version": "0.1.0",
   "description": "A fast, native Bun-powered markdown parser with frontmatter support. Replaces gray-matter, marked, and yaml.",
@@ -63,8 +63,10 @@
     "bench:yaml": "bun benchmarks/yaml-bench.ts",
     "bench:frontmatter": "bun benchmarks/frontmatter-bench.ts",
     "bench:all": "bun run bench && bun run bench:yaml && bun run bench:frontmatter",
-    "lint": "echo 'No linting for now'",
-    "lint:fix": "echo 'No linting for now'",
+    "lint": "bunx --bun pickier lint . --config pickier.config.ts --max-warnings 9999",
+    "lint:fix": "bunx --bun pickier lint . --fix --config pickier.config.ts --max-warnings 9999",
+    "format": "bunx --bun pickier format . --config pickier.config.ts",
+    "format:fix": "bunx --bun pickier format . --write --config pickier.config.ts",
     "changelog": "bunx logsmith --verbose",
     "changelog:generate": "bunx logsmith --output CHANGELOG.md",
     "release": "bun run changelog:generate && bunx bumpx prompt --recursive",
@@ -85,5 +87,13 @@
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "showdown": "^2.1.0"
+  },
+  "git-hooks": {
+    "pre-commit": {
+      "staged-lint": {
+        "*.{js,ts,json,yaml,yml,md}": "bunx --bun pickier lint --fix"
+      }
+    },
+    "commit-msg": "bunx gitlint --edit .git/COMMIT_EDITMSG"
   }
 }
