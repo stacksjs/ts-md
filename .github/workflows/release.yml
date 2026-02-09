@@ -26,7 +26,7 @@ jobs:
         run: bun install
 
       - name: Publish to npm
-        run: pantry publish --access public
+        run: pantry npm:publish --access public
         env:
           BUN_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
