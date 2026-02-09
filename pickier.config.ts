@@ -48,6 +48,7 @@ const config: PickierConfig = {
     'regexp/no-super-linear-backtracking': 'off',
     'style/brace-style': 'off',
     'style/max-statements-per-line': 'off',
+    'ts/no-top-level-await': 'off',
 
     // Markdown rules
     'markdown/heading-increment': 'error',
