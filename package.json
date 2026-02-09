@@ -1,5 +1,5 @@
 {
-  "name": "ts-md",
+  "name": "@stacksjs/ts-md",
   "type": "module",
   "version": "0.1.0",
   "description": "A fast, native Bun-powered markdown parser with frontmatter support. Replaces gray-matter, marked, and yaml.",
