@@ -31,7 +31,7 @@ jobs:
           BUN_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Create GitHub Release
-        uses: stacksjs/action-releaser@v1.2.6
+        uses: stacksjs/action-releaser@v1.2.8
         with:
           files: |
             bin/bin-name-linux-x64
