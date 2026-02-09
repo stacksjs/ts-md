@@ -5,13 +5,13 @@
   "description": "A fast, native Bun-powered markdown parser with frontmatter support. Replaces gray-matter, marked, and yaml.",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "license": "MIT",
-  "homepage": "https://github.com/stacksjs/ts-markdown#readme",
+  "homepage": "https://github.com/stacksjs/ts-md#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stacksjs/ts-markdown.git"
+    "url": "git+https://github.com/stacksjs/ts-md.git"
   },
   "bugs": {
-    "url": "https://github.com/stacksjs/ts-markdown/issues"
+    "url": "https://github.com/stacksjs/ts-md/issues"
   },
   "keywords": [
     "markdown",
