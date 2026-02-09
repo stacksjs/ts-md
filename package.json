@@ -37,7 +37,7 @@
   "bin": {
     "md": "./bin/cli.ts"
   },
-  "files": ["LICENSE.md", "README.md", "dist", "bin"],
+  "files": ["LICENSE.md", "README.md", "dist", "bin/cli.ts"],
   "scripts": {
     "build": "bun --bun build.ts",
     "compile": "bun build ./bin/cli.ts --compile --minify --outfile bin/md",

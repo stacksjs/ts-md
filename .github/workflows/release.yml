@@ -34,10 +34,10 @@ jobs:
         uses: stacksjs/action-releaser@v1.2.6
         with:
           files: |
-            bin/bin-name-linux-x64
-            bin/bin-name-linux-arm64
-            bin/bin-name-windows-x64.exe
-            bin/bin-name-darwin-x64
-            bin/bin-name-darwin-arm64
+            bin/md-linux-x64.zip
+            bin/md-linux-arm64.zip
+            bin/md-windows-x64.zip
+            bin/md-darwin-x64.zip
+            bin/md-darwin-arm64.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
