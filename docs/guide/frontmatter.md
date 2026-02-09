@@ -1,11 +1,11 @@
 # Frontmatter Extraction
 
-ts-md provides a fast frontmatter parser that supports YAML, TOML, and JSON formats. It's a high-performance replacement for gray-matter.
+@stacksjs/ts-md provides a fast frontmatter parser that supports YAML, TOML, and JSON formats. It's a high-performance replacement for gray-matter.
 
 ## Basic Usage
 
 ```typescript
-import { parseFrontmatter } from 'ts-md'
+import { parseFrontmatter } from '@stacksjs/ts-md'
 
 const content = `---
 title: My Post
@@ -61,7 +61,7 @@ Content starts here.
 Use TypeScript generics to type your frontmatter data:
 
 ```typescript
-import { parseFrontmatter } from 'ts-md'
+import { parseFrontmatter } from '@stacksjs/ts-md'
 
 interface BlogPost {
   title: string
@@ -108,7 +108,7 @@ console.log(matter)   // 'title: My Post\ndate: 2024-01-15'
 ### Check for Frontmatter
 
 ```typescript
-import { hasFrontmatter } from 'ts-md/frontmatter'
+import { hasFrontmatter } from '@stacksjs/ts-md/frontmatter'
 
 if (hasFrontmatter(content)) {
   const { data } = parseFrontmatter(content)
@@ -119,7 +119,7 @@ if (hasFrontmatter(content)) {
 ### Extract Raw Frontmatter
 
 ```typescript
-import { extractFrontmatter } from 'ts-md/frontmatter'
+import { extractFrontmatter } from '@stacksjs/ts-md/frontmatter'
 
 const rawFrontmatter = extractFrontmatter(content)
 // Returns the raw frontmatter string without delimiters, or null if none found
@@ -130,7 +130,7 @@ const rawFrontmatter = extractFrontmatter(content)
 Convert an object back to frontmatter format:
 
 ```typescript
-import { stringifyFrontmatter } from 'ts-md'
+import { stringifyFrontmatter } from '@stacksjs/ts-md'
 
 const data = {
   title: 'My Post',
@@ -167,10 +167,10 @@ tags = ["typescript", "markdown"]
 
 ## YAML Utilities
 
-ts-md includes a built-in YAML parser:
+@stacksjs/ts-md includes a built-in YAML parser:
 
 ```typescript
-import { parseYaml, stringifyYaml } from 'ts-md'
+import { parseYaml, stringifyYaml } from '@stacksjs/ts-md'
 
 // Parse YAML string
 const obj = parseYaml(`
@@ -192,7 +192,7 @@ const yaml = stringifyYaml({
 Parse frontmatter and convert markdown to HTML in one call:
 
 ```typescript
-import { parseMarkdownWithFrontmatter } from 'ts-md'
+import { parseMarkdownWithFrontmatter } from '@stacksjs/ts-md'
 
 const result = parseMarkdownWithFrontmatter<BlogPost>(content)
 
@@ -231,7 +231,7 @@ The frontmatter parser uses regex-based extraction with minimal allocations:
 
 Benchmark results:
 ```
-ts-md frontmatter:  1.2M ops/sec
+@stacksjs/ts-md frontmatter:  1.2M ops/sec
 gray-matter:        450K ops/sec
 ```
 

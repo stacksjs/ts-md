@@ -1,11 +1,11 @@
 # Parsing Markdown
 
-ts-md provides a powerful markdown parser with support for GitHub Flavored Markdown (GFM) and various customization options.
+@stacksjs/ts-md provides a powerful markdown parser with support for GitHub Flavored Markdown (GFM) and various customization options.
 
 ## Basic Parsing
 
 ```typescript
-import { parseMarkdown } from 'ts-md'
+import { parseMarkdown } from '@stacksjs/ts-md'
 
 const html = parseMarkdown('# Hello **world**')
 // <h1 id="hello-world">Hello <strong>world</strong></h1>
@@ -16,7 +16,7 @@ const html = parseMarkdown('# Hello **world**')
 Configure the parser with various options:
 
 ```typescript
-import { parseMarkdown } from 'ts-md'
+import { parseMarkdown } from '@stacksjs/ts-md'
 
 const html = parseMarkdown(markdown, {
   gfm: true,              // GitHub Flavored Markdown (default: true)
@@ -139,7 +139,7 @@ ___
 Integrate with syntax highlighters:
 
 ```typescript
-import { parseMarkdown } from 'ts-md'
+import { parseMarkdown } from '@stacksjs/ts-md'
 import { highlight } from 'ts-syntax-highlighter'
 
 const html = parseMarkdown(markdown, {
@@ -157,7 +157,7 @@ const html = parseMarkdown(markdown, {
 For synchronous parsing (same API as async):
 
 ```typescript
-import { parseMarkdownSync } from 'ts-md'
+import { parseMarkdownSync } from '@stacksjs/ts-md'
 
 const html = parseMarkdownSync(markdown, options)
 ```

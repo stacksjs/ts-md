@@ -31,16 +31,16 @@ features:
 
 ## Overview
 
-ts-md is a high-performance markdown parser and sanitizer built for Bun. It provides a complete solution for parsing markdown with frontmatter support.
+@stacksjs/ts-md is a high-performance markdown parser and sanitizer built for Bun. It provides a complete solution for parsing markdown with frontmatter support.
 
 ## Quick Start
 
 ```bash
-bun add ts-md
+bun add @stacksjs/ts-md
 ```
 
 ```typescript
-import { parseMarkdown, parseFrontmatter } from 'ts-md'
+import { parseMarkdown, parseFrontmatter } from '@stacksjs/ts-md'
 
 // Parse markdown to HTML
 const html = parseMarkdown('# Hello **world**')
@@ -54,7 +54,7 @@ title: My Post
 
 ## Performance
 
-| Document Size | ts-md | markdown-it | marked |
+| Document Size | @stacksjs/ts-md | markdown-it | marked |
 |---------------|-------|-------------|--------|
 | Small (< 1KB) | 324B ops/sec | 112B ops/sec | 26B ops/sec |
 | Medium (~3KB) | 34.7B ops/sec | 17.7B ops/sec | 2.8B ops/sec |

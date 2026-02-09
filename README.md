@@ -14,7 +14,7 @@ High-performance markdown parser and sanitizer built for Bun.
 ## Installation
 
 ```bash
-bun add ts-md
+bun add @stacksjs/ts-md
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ bun add ts-md
 ### Basic Markdown Parsing
 
 ```typescript
-import { parseMarkdown } from 'ts-md'
+import { parseMarkdown } from '@stacksjs/ts-md'
 
 const html = parseMarkdown('# Hello **world**')
 // <h1 id="hello-world">Hello <strong>world</strong></h1>
@@ -47,7 +47,7 @@ const html = parseMarkdown(markdown, {
 ### HTML Sanitization
 
 ```typescript
-import { sanitizeHtml } from 'ts-md'
+import { sanitizeHtml } from '@stacksjs/ts-md'
 
 const clean = sanitizeHtml(userInput, {
   allowedTags: ['p', 'strong', 'em', 'a', 'code'],
@@ -61,7 +61,7 @@ const clean = sanitizeHtml(userInput, {
 ### Frontmatter Parsing
 
 ```typescript
-import { parseFrontmatter } from 'ts-md'
+import { parseFrontmatter } from '@stacksjs/ts-md'
 
 const content = `---
 title: My Post
@@ -78,7 +78,7 @@ console.log(data.title) // 'My Post'
 
 Benchmark results against popular markdown parsers:
 
-| Document Size | ts-md | markdown-it | marked | showdown |
+| Document Size | @stacksjs/ts-md | markdown-it | marked | showdown |
 |--------------|-------------------|-------------|---------|----------|
 | Small (< 1KB) | 324B ops/sec | 112B ops/sec | 26B ops/sec | 14B ops/sec |
 | Medium (~3KB) | 34.7B ops/sec | 17.7B ops/sec | 2.8B ops/sec | 2.8B ops/sec |

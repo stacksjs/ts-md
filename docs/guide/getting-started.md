@@ -1,23 +1,23 @@
 # Getting Started
 
-ts-md is a fast, native Bun-powered markdown parser with frontmatter support. It replaces gray-matter, marked, and yaml with performance-optimized implementations.
+@stacksjs/ts-md is a fast, native Bun-powered markdown parser with frontmatter support. It replaces gray-matter, marked, and yaml with performance-optimized implementations.
 
 ## Installation
 
-Install ts-md using your preferred package manager:
+Install @stacksjs/ts-md using your preferred package manager:
 
 ```bash
 # Using bun (recommended)
-bun add ts-md
+bun add @stacksjs/ts-md
 
 # Using npm
-npm install ts-md
+npm install @stacksjs/ts-md
 
 # Using pnpm
-pnpm add ts-md
+pnpm add @stacksjs/ts-md
 
 # Using yarn
-yarn add ts-md
+yarn add @stacksjs/ts-md
 ```
 
 ## Basic Usage
@@ -25,7 +25,7 @@ yarn add ts-md
 ### Parse Markdown to HTML
 
 ```typescript
-import { parseMarkdown } from 'ts-md'
+import { parseMarkdown } from '@stacksjs/ts-md'
 
 const markdown = `
 # Welcome to ts-md
@@ -55,7 +55,7 @@ Output:
 ### Parse with Frontmatter
 
 ```typescript
-import { parseFrontmatter } from 'ts-md'
+import { parseFrontmatter } from '@stacksjs/ts-md'
 
 const content = `---
 title: My Blog Post
@@ -84,7 +84,7 @@ console.log(markdown)
 For convenience, parse both frontmatter and markdown in a single call:
 
 ```typescript
-import { parseMarkdownWithFrontmatter } from 'ts-md'
+import { parseMarkdownWithFrontmatter } from '@stacksjs/ts-md'
 
 const content = `---
 title: Quick Start Guide
@@ -102,10 +102,10 @@ console.log(html)       // '<h1 id="getting-started">Getting Started</h1>\n<p>Th
 
 ## Default Export
 
-ts-md also provides a default export for convenience:
+@stacksjs/ts-md also provides a default export for convenience:
 
 ```typescript
-import markdownParser from 'ts-md'
+import markdownParser from '@stacksjs/ts-md'
 
 // All functions available on the default export
 const { data, content, html } = markdownParser.parseMarkdownWithFrontmatter(content)
@@ -113,10 +113,10 @@ const { data, content, html } = markdownParser.parseMarkdownWithFrontmatter(cont
 
 ## TypeScript Support
 
-ts-md is written in TypeScript and provides full type definitions:
+@stacksjs/ts-md is written in TypeScript and provides full type definitions:
 
 ```typescript
-import type { MarkdownOptions, ParsedMarkdown } from 'ts-md'
+import type { MarkdownOptions, ParsedMarkdown } from '@stacksjs/ts-md'
 
 // Type your frontmatter data
 interface BlogPost {
@@ -132,7 +132,7 @@ const { data } = parseFrontmatter<BlogPost>(content)
 
 ## CLI Usage
 
-ts-md includes a command-line interface:
+@stacksjs/ts-md includes a command-line interface:
 
 ```bash
 # Parse a markdown file

@@ -1,11 +1,11 @@
 # HTML Conversion
 
-ts-md converts markdown to clean, semantic HTML with support for sanitization and custom rendering.
+@stacksjs/ts-md converts markdown to clean, semantic HTML with support for sanitization and custom rendering.
 
 ## Basic Conversion
 
 ```typescript
-import { parseMarkdown } from 'ts-md'
+import { parseMarkdown } from '@stacksjs/ts-md'
 
 const markdown = `
 # Hello World
@@ -34,7 +34,7 @@ Output:
 Protect against XSS attacks by sanitizing HTML output:
 
 ```typescript
-import { sanitizeHtml } from 'ts-md'
+import { sanitizeHtml } from '@stacksjs/ts-md'
 
 const userInput = '<script>alert("XSS")</script><p>Safe content</p>'
 
@@ -152,7 +152,7 @@ console.log(greeting)</code></pre>
 Integrate with syntax highlighters:
 
 ```typescript
-import { parseMarkdown } from 'ts-md'
+import { parseMarkdown } from '@stacksjs/ts-md'
 import { highlight } from 'ts-syntax-highlighter'
 
 const html = parseMarkdown(markdown, {
@@ -256,7 +256,7 @@ parseMarkdown('Line 1\nLine 2', { breaks: true })
 Parse frontmatter and get HTML in one call:
 
 ```typescript
-import { parseMarkdownWithFrontmatter } from 'ts-md'
+import { parseMarkdownWithFrontmatter } from '@stacksjs/ts-md'
 
 const content = `---
 title: My Post
