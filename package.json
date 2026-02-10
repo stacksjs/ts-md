@@ -77,7 +77,7 @@
     "typecheck": "bun --bun tsc --noEmit"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@types/bun": "latest1.3.9",
     "better-dx": "^0.2.5",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.1",
