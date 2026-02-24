@@ -327,6 +327,7 @@ function stringifyFallback(obj: JsonValue, indent: number): string {
 /**
  * Recursively stringify a value to YAML format
  */
+// eslint-disable-next-line pickier/no-unused-vars
 function stringifyValue(value: JsonValue, indent: number): string {
   const spaces = ' '.repeat(indent)
 
