@@ -77,11 +77,11 @@
     "typecheck": "bun --bun tsc --noEmit"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@types/bun": "latest1.3.9",
     "better-dx": "^0.2.5",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.1",
-    "markdown-it": "^14.1.0",
+    "markdown-it": "^14.1.1",
     "marked": "^17.0.1",
     "mitata": "^1.0.34",
     "remark": "^15.0.1",
