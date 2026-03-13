@@ -2,7 +2,7 @@
 
 ## About
 
-A fast, native Bun-powered markdown parser with frontmatter support.
+A high-performance markdown parser and HTML sanitizer built for Bun. It supports GitHub Flavored Markdown (tables, task lists, strikethrough), header ID generation, syntax highlighting, frontmatter parsing (YAML, TOML, JSON), and HTML sanitization for XSS prevention. Uses a flat token stream architecture with position-based parsing for performance, benchmarking 2-3x faster than markdown-it on typical documents.
 
 ## Linting
 
