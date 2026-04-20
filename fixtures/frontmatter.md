@@ -19,11 +19,3 @@ metadata:
   likes: 50
   comments: 25
 ---
-
-# Blog Post Content
-
-This is the actual content of the blog post that comes after the frontmatter.
-
-## Introduction
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.

@@ -14,6 +14,7 @@ This is **bold** and *italic* text.
 
 - List item 1
 - List item 2
+
 `
 
 const html = parseMarkdown(markdown)
@@ -71,6 +72,7 @@ interface SanitizeOptions {
 ### Default Allowed Tags
 
 When no options are provided, these tags are allowed:
+
 - Block: `p`, `div`, `h1`-`h6`, `blockquote`, `pre`, `ul`, `ol`, `li`
 - Inline: `a`, `strong`, `em`, `code`, `span`, `br`
 - Media: `img`
@@ -120,6 +122,7 @@ const html = parseMarkdown(markdown)
 ```
 
 The following characters are escaped:
+
 - `&` -> `&amp;`
 - `<` -> `&lt;`
 - `>` -> `&gt;`
@@ -225,8 +228,10 @@ Output:
 GFM task lists render as checkboxes:
 
 ```markdown
+
 - [x] Completed task
 - [ ] Incomplete task
+
 ```
 
 Output:
@@ -279,6 +284,7 @@ console.log(html)       // '<h1 id="hello-world">Hello World</h1>\n<p>Content he
 Sanitize HTML to prevent XSS attacks.
 
 **Parameters:**
+
 - `html: string` - HTML content to sanitize
 - `options?: SanitizeOptions` - Sanitization configuration
 

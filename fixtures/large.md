@@ -13,7 +13,6 @@ This document is designed to stress-test markdown parsers with a large amount of
 
 This is a comprehensive test document with hundreds of elements to parse.
 
-
 ## Section 1
 
 This is section 1 with various markdown elements.
@@ -41,7 +40,6 @@ function example1() {
 |----------|----------|----------|
 | A1    | B1    | C1    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 2
 
@@ -71,7 +69,6 @@ function example2() {
 | A2    | B2    | C2    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 3
 
 This is section 3 with various markdown elements.
@@ -99,7 +96,6 @@ function example3() {
 |----------|----------|----------|
 | A3    | B3    | C3    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 4
 
@@ -129,7 +125,6 @@ function example4() {
 | A4    | B4    | C4    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 5
 
 This is section 5 with various markdown elements.
@@ -157,7 +152,6 @@ function example5() {
 |----------|----------|----------|
 | A5    | B5    | C5    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 6
 
@@ -187,7 +181,6 @@ function example6() {
 | A6    | B6    | C6    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 7
 
 This is section 7 with various markdown elements.
@@ -215,7 +208,6 @@ function example7() {
 |----------|----------|----------|
 | A7    | B7    | C7    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 8
 
@@ -245,7 +237,6 @@ function example8() {
 | A8    | B8    | C8    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 9
 
 This is section 9 with various markdown elements.
@@ -273,7 +264,6 @@ function example9() {
 |----------|----------|----------|
 | A9    | B9    | C9    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 10
 
@@ -303,7 +293,6 @@ function example10() {
 | A10    | B10    | C10    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 11
 
 This is section 11 with various markdown elements.
@@ -331,7 +320,6 @@ function example11() {
 |----------|----------|----------|
 | A11    | B11    | C11    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 12
 
@@ -361,7 +349,6 @@ function example12() {
 | A12    | B12    | C12    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 13
 
 This is section 13 with various markdown elements.
@@ -389,7 +376,6 @@ function example13() {
 |----------|----------|----------|
 | A13    | B13    | C13    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 14
 
@@ -419,7 +405,6 @@ function example14() {
 | A14    | B14    | C14    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 15
 
 This is section 15 with various markdown elements.
@@ -447,7 +432,6 @@ function example15() {
 |----------|----------|----------|
 | A15    | B15    | C15    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 16
 
@@ -477,7 +461,6 @@ function example16() {
 | A16    | B16    | C16    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 17
 
 This is section 17 with various markdown elements.
@@ -505,7 +488,6 @@ function example17() {
 |----------|----------|----------|
 | A17    | B17    | C17    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 18
 
@@ -535,7 +517,6 @@ function example18() {
 | A18    | B18    | C18    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 19
 
 This is section 19 with various markdown elements.
@@ -563,7 +544,6 @@ function example19() {
 |----------|----------|----------|
 | A19    | B19    | C19    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 20
 
@@ -593,7 +573,6 @@ function example20() {
 | A20    | B20    | C20    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 21
 
 This is section 21 with various markdown elements.
@@ -621,7 +600,6 @@ function example21() {
 |----------|----------|----------|
 | A21    | B21    | C21    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 22
 
@@ -651,7 +629,6 @@ function example22() {
 | A22    | B22    | C22    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 23
 
 This is section 23 with various markdown elements.
@@ -679,7 +656,6 @@ function example23() {
 |----------|----------|----------|
 | A23    | B23    | C23    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 24
 
@@ -709,7 +685,6 @@ function example24() {
 | A24    | B24    | C24    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 25
 
 This is section 25 with various markdown elements.
@@ -737,7 +712,6 @@ function example25() {
 |----------|----------|----------|
 | A25    | B25    | C25    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 26
 
@@ -767,7 +741,6 @@ function example26() {
 | A26    | B26    | C26    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 27
 
 This is section 27 with various markdown elements.
@@ -795,7 +768,6 @@ function example27() {
 |----------|----------|----------|
 | A27    | B27    | C27    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 28
 
@@ -825,7 +797,6 @@ function example28() {
 | A28    | B28    | C28    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 29
 
 This is section 29 with various markdown elements.
@@ -853,7 +824,6 @@ function example29() {
 |----------|----------|----------|
 | A29    | B29    | C29    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 30
 
@@ -883,7 +853,6 @@ function example30() {
 | A30    | B30    | C30    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 31
 
 This is section 31 with various markdown elements.
@@ -911,7 +880,6 @@ function example31() {
 |----------|----------|----------|
 | A31    | B31    | C31    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 32
 
@@ -941,7 +909,6 @@ function example32() {
 | A32    | B32    | C32    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 33
 
 This is section 33 with various markdown elements.
@@ -969,7 +936,6 @@ function example33() {
 |----------|----------|----------|
 | A33    | B33    | C33    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 34
 
@@ -999,7 +965,6 @@ function example34() {
 | A34    | B34    | C34    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 35
 
 This is section 35 with various markdown elements.
@@ -1027,7 +992,6 @@ function example35() {
 |----------|----------|----------|
 | A35    | B35    | C35    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 36
 
@@ -1057,7 +1021,6 @@ function example36() {
 | A36    | B36    | C36    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 37
 
 This is section 37 with various markdown elements.
@@ -1085,7 +1048,6 @@ function example37() {
 |----------|----------|----------|
 | A37    | B37    | C37    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 38
 
@@ -1115,7 +1077,6 @@ function example38() {
 | A38    | B38    | C38    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 39
 
 This is section 39 with various markdown elements.
@@ -1143,7 +1104,6 @@ function example39() {
 |----------|----------|----------|
 | A39    | B39    | C39    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 40
 
@@ -1173,7 +1133,6 @@ function example40() {
 | A40    | B40    | C40    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 41
 
 This is section 41 with various markdown elements.
@@ -1201,7 +1160,6 @@ function example41() {
 |----------|----------|----------|
 | A41    | B41    | C41    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 42
 
@@ -1231,7 +1189,6 @@ function example42() {
 | A42    | B42    | C42    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 43
 
 This is section 43 with various markdown elements.
@@ -1259,7 +1216,6 @@ function example43() {
 |----------|----------|----------|
 | A43    | B43    | C43    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 44
 
@@ -1289,7 +1245,6 @@ function example44() {
 | A44    | B44    | C44    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 45
 
 This is section 45 with various markdown elements.
@@ -1317,7 +1272,6 @@ function example45() {
 |----------|----------|----------|
 | A45    | B45    | C45    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 46
 
@@ -1347,7 +1301,6 @@ function example46() {
 | A46    | B46    | C46    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 47
 
 This is section 47 with various markdown elements.
@@ -1375,7 +1328,6 @@ function example47() {
 |----------|----------|----------|
 | A47    | B47    | C47    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Section 48
 
@@ -1405,7 +1357,6 @@ function example48() {
 | A48    | B48    | C48    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 49
 
 This is section 49 with various markdown elements.
@@ -1434,7 +1385,6 @@ function example49() {
 | A49    | B49    | C49    |
 | Data 1   | Data 2   | Data 3   |
 
-
 ## Section 50
 
 This is section 50 with various markdown elements.
@@ -1462,7 +1412,6 @@ function example50() {
 |----------|----------|----------|
 | A50    | B50    | C50    |
 | Data 1   | Data 2   | Data 3   |
-
 
 ## Conclusion
 

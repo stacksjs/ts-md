@@ -35,6 +35,7 @@ This is a **bold** statement with *italic* text.
 - Item 1
 - Item 2
 - Item 3
+
 `
 
 const html = parseMarkdown(markdown)
@@ -62,8 +63,10 @@ title: My Blog Post
 author: John Doe
 date: 2024-01-15
 tags:
+
   - typescript
   - markdown
+
 ---
 
 # Hello World

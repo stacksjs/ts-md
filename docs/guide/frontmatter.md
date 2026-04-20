@@ -32,8 +32,10 @@ title: My Post
 author: John Doe
 date: 2024-01-15
 tags:
+
   - typescript
   - markdown
+
 published: true
 ---
 
@@ -147,8 +149,10 @@ const result = stringifyFrontmatter(data, content, 'yaml')
 title: My Post
 date: 2024-01-15
 tags:
+
   - typescript
   - markdown
+
 ---
 # Hello World
 */
@@ -176,8 +180,10 @@ import { parseYaml, stringifyYaml } from '@stacksjs/ts-md'
 const obj = parseYaml(`
 title: My Post
 tags:
+
   - typescript
   - markdown
+
 `)
 
 // Stringify object to YAML
@@ -242,6 +248,7 @@ gray-matter:        450K ops/sec
 Extract and parse frontmatter from markdown content.
 
 **Parameters:**
+
 - `content: string` - The full markdown content with frontmatter
 
 **Returns:** `ParsedMarkdown<T>`
@@ -251,6 +258,7 @@ Extract and parse frontmatter from markdown content.
 Create markdown content with frontmatter.
 
 **Parameters:**
+
 - `data: T` - Object to convert to frontmatter
 - `content: string` - Markdown content
 - `format?: 'yaml' | 'toml'` - Frontmatter format (default: 'yaml')
@@ -262,6 +270,7 @@ Create markdown content with frontmatter.
 Check if content has frontmatter.
 
 **Parameters:**
+
 - `content: string` - Content to check
 
 **Returns:** `boolean`
@@ -271,6 +280,7 @@ Check if content has frontmatter.
 Extract raw frontmatter without parsing.
 
 **Parameters:**
+
 - `content: string` - Content to extract from
 
 **Returns:** `string | null`

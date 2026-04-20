@@ -57,8 +57,8 @@ All headings automatically receive ID attributes based on their content:
 ### Emphasis
 
 ```markdown
-*italic* or _italic_
-**bold** or __bold__
+*italic* or *italic*
+**bold** or **bold**
 ***bold and italic***
 ~~strikethrough~~
 ```
@@ -91,23 +91,29 @@ console.log(greeting)
 
 Unordered lists:
 ```markdown
+
 - Item 1
 - Item 2
   - Nested item
 - Item 3
+
 ```
 
 Ordered lists:
 ```markdown
+
 1. First item
 2. Second item
 3. Third item
+
 ```
 
 Task lists (GFM):
 ```markdown
+
 - [x] Completed task
 - [ ] Incomplete task
+
 ```
 
 ### Tables (GFM)
@@ -196,6 +202,7 @@ const html = parseMarkdown('[broken link')
 Converts markdown to HTML.
 
 **Parameters:**
+
 - `markdown: string` - The markdown content to parse
 - `options?: MarkdownOptions` - Optional parsing configuration
 
