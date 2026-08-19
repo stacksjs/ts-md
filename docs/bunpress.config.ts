@@ -1,12 +1,14 @@
-import type { BunpressConfig } from 'bunpress'
+import type { BunPressConfig } from '@stacksjs/bunpress'
 
-const config: BunpressConfig = {
-  name: 'ts-md',
+const config: BunPressConfig = {
+  title: 'ts-md',
   description: 'A fast, native Bun-powered markdown parser with frontmatter support',
   url: 'https://ts-md.netlify.app',
 
-  theme: {
-    primaryColor: '#3178c6',
+  themeConfig: {
+    colors: {
+      primary: '#3178c6',
+    },
   },
 
   sidebar: [
@@ -40,7 +42,7 @@ const config: BunpressConfig = {
     },
   ],
 
-  navbar: [
+  nav: [
     { text: 'Guide', link: '/guide/getting-started' },
     { text: 'GitHub', link: 'https://github.com/stacksjs/ts-markdown' },
   ],
