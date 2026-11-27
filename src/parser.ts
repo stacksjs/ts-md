@@ -696,15 +696,19 @@ function findUnescaped(source: string, marker: string, start: number): number {
 
 function findInlineDelimiter(source: string, marker: string, start: number): number {
   let position = findUnescaped(source, marker, start)
-  if (position === -1) return -1
-  let backtick = findUnescaped(source, '`', start)
-  while (backtick !== -1 && backtick < position) {
-    const openEnd = backtickRunEnd(source, backtick)
-    const length = openEnd - backtick
+  for (let scan = start; scan < position; scan++) {
+    const char = source.charCodeAt(scan)
+    if (char === CODE_BACKSLASH && isAsciiPunctuation(source.charCodeAt(scan + 1))) {
+      scan++
+      continue
+    }
+    if (char !== CODE_BACKTICK) continue
+    const openEnd = backtickRunEnd(source, scan)
+    const length = openEnd - scan
     const closing = closingBacktickRun(source, openEnd, length)
     const end = closing === -1 ? openEnd : closing + length
     if (position < end) position = findUnescaped(source, marker, end)
-    backtick = findUnescaped(source, '`', end)
+    scan = end - 1
   }
   return position
 }

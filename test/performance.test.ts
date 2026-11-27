@@ -160,6 +160,18 @@ tags:
     expect(result).toContain('<em>')
   })
 
+  it('should keep emphasis scanning bounded in a single long paragraph', () => {
+    const size = 120_000
+    const md = `${'**ready** '.repeat(size)}\`end\``
+    const start = performance.now()
+    const result = parseMarkdown(md)
+    const duration = performance.now() - start
+
+    expect(result).toHaveLength(size * '<strong>ready</strong> '.length + '<p><code>end</code></p>\n'.length)
+    expect(result).toEndWith('<code>end</code></p>\n')
+    expect(duration).toBeLessThan(1000)
+  })
+
   it('should handle mixed content stress test', () => {
     const md = `
 # Main Title
