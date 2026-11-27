@@ -57,6 +57,7 @@ const CODE_STAR = 42 // *
 const CODE_UNDERSCORE = 95 // _
 const CODE_BACKTICK = 96 // `
 const CODE_LBRACKET = 91 // [
+const CODE_BACKSLASH = 92 // \\
 const CODE_BANG = 33 // !
 const CODE_TILDE = 126 // ~
 const CODE_PIPE = 124 // |
@@ -74,10 +75,11 @@ function isAlphanumeric(code: number): boolean {
 
 export function parse(markdown: string, options: MarkdownOptions = {}): string {
   const opts = { ...defaultOptions, ...options }
+  const src = markdown.replace(/\r\n?/g, '\n')
   const state: ParserState = {
-    src: markdown.replace(/\r\n/g, '\n').replace(/\r/g, '\n'),
+    src,
     pos: 0,
-    posMax: markdown.length,
+    posMax: src.length,
     tokens: [],
     pending: '',
     level: 0,
@@ -348,48 +350,13 @@ function parseBlockquote(state: ParserState): boolean {
 function parseList(state: ParserState): boolean {
   const firstChar = state.src.charCodeAt(state.pos)
   const isOrdered = firstChar >= 48 && firstChar <= 57
-
-  // For bullet lists, make sure there's only one marker character
-  if (!isOrdered) {
-    const nextChar = state.src.charCodeAt(state.pos + 1)
-    // If followed by same character or not followed by space, it's not a list
-    if (nextChar === firstChar || nextChar !== CODE_SPACE) {
-      return false
-    }
-  }
+  let itemStart = listItemStart(state.src, state.pos, isOrdered)
+  if (itemStart === -1) return false
 
   pushToken(state, isOrdered ? 'ordered_list_open' : 'bullet_list_open', isOrdered ? 'ol' : 'ul', 1)
 
-  while (state.pos < state.posMax) {
-    const char = state.src.charCodeAt(state.pos)
-
-    // Check for list marker
-    if (isOrdered) {
-      let num = 0
-      while (state.src.charCodeAt(state.pos) >= 48 && state.src.charCodeAt(state.pos) <= 57) {
-        state.pos++
-        num++
-      }
-      if (num === 0 || state.src.charCodeAt(state.pos) !== 46)
-        break // not a number or missing dot
-      state.pos++ // skip dot
-    }
-    else {
-      if (char !== CODE_STAR && char !== CODE_MINUS && char !== CODE_PLUS)
-        break
-      // Make sure next char isn't the same (would be **, --, etc)
-      if (state.src.charCodeAt(state.pos + 1) === char)
-        break
-      state.pos++
-    }
-
-    if (state.src.charCodeAt(state.pos) !== CODE_SPACE)
-      break
-    state.pos++ // skip space
-
-    // Get item content
-    const itemStart = state.pos
-    let itemEnd = state.pos
+  while (itemStart !== -1) {
+    let itemEnd = itemStart
     while (itemEnd < state.posMax && state.src.charCodeAt(itemEnd) !== CODE_NEWLINE) {
       itemEnd++
     }
@@ -416,21 +383,32 @@ function parseList(state: ParserState): boolean {
 
     state.pos = itemEnd + 1
 
-    // Check if next line is also a list item
-    const nextChar = state.src.charCodeAt(state.pos)
-    if (!isListMarker(nextChar))
-      break
+    itemStart = listItemStart(state.src, state.pos, isOrdered)
   }
 
   pushToken(state, isOrdered ? 'ordered_list_close' : 'bullet_list_close', isOrdered ? 'ol' : 'ul', -1)
   return true
 }
 
+function listItemStart(source: string, start: number, ordered: boolean): number {
+  let markerEnd = start + 1
+  if (ordered) {
+    markerEnd = start
+    while (source.charCodeAt(markerEnd) >= 48 && source.charCodeAt(markerEnd) <= 57) markerEnd++
+    if (markerEnd === start || source.charCodeAt(markerEnd) !== 46) return -1
+    markerEnd++
+  }
+  else {
+    const marker = source.charCodeAt(start)
+    if (marker !== CODE_STAR && marker !== CODE_MINUS && marker !== CODE_PLUS) return -1
+  }
+  return source.charCodeAt(markerEnd) === CODE_SPACE ? markerEnd + 1 : -1
+}
+
 // Helper to split table row by pipes while respecting inline code
 function splitTableCells(line: string): string[] {
   const cells: string[] = []
   let current = ''
-  let inCode = false
   let escaped = false
 
   for (let i = 0; i < line.length; i++) {
@@ -449,15 +427,18 @@ function splitTableCells(line: string): string[] {
       continue
     }
 
-    // Toggle code mode on backtick
     if (char === '`') {
-      inCode = !inCode
-      current += char
+      const openEnd = backtickRunEnd(line, i)
+      const length = openEnd - i
+      const closing = closingBacktickRun(line, openEnd, length)
+      const end = closing === -1 ? openEnd : closing + length
+      current += line.slice(i, end)
+      i = end - 1
       continue
     }
 
     // Split on pipe only if not in code
-    if (char === '|' && !inCode) {
+    if (char === '|') {
       cells.push(current.trim())
       current = ''
       continue
@@ -624,6 +605,20 @@ function parseInline(state: ParserState, content: string): void {
   while (state.pos < state.posMax) {
     const char = state.src.charCodeAt(state.pos)
 
+    if (char === CODE_BACKSLASH) {
+      const escaped = state.src.charCodeAt(state.pos + 1)
+      if (escaped === CODE_NEWLINE) {
+        pushToken(state, 'br', 'br', 0)
+        state.pos += 2
+        continue
+      }
+      if (isAsciiPunctuation(escaped)) {
+        state.pending += state.src[state.pos + 1]
+        state.pos += 2
+        continue
+      }
+    }
+
     // Strong (bold) - check for ** or __
     if ((char === CODE_STAR || char === CODE_UNDERSCORE) && state.src.charCodeAt(state.pos + 1) === char) {
       if (scanStrong(state, char))
@@ -638,8 +633,8 @@ function parseInline(state: ParserState, content: string): void {
 
     // Inline code
     if (char === CODE_BACKTICK) {
-      if (scanCode(state))
-        continue
+      scanCode(state)
+      continue
     }
 
     // Links
@@ -683,6 +678,37 @@ function parseInline(state: ParserState, content: string): void {
   state.posMax = savedPosMax
 }
 
+function isAsciiPunctuation(code: number): boolean {
+  return (code >= 33 && code <= 47) || (code >= 58 && code <= 64)
+    || (code >= 91 && code <= 96) || (code >= 123 && code <= 126)
+}
+
+function findUnescaped(source: string, marker: string, start: number): number {
+  let position = source.indexOf(marker, start)
+  while (position !== -1 && source.charCodeAt(position - 1) === CODE_BACKSLASH) {
+    let before = position - 1
+    while (source.charCodeAt(before) === CODE_BACKSLASH) before--
+    if ((position - before - 1) % 2 === 0) break
+    position = source.indexOf(marker, position + 1)
+  }
+  return position
+}
+
+function findInlineDelimiter(source: string, marker: string, start: number): number {
+  let position = findUnescaped(source, marker, start)
+  if (position === -1) return -1
+  let backtick = findUnescaped(source, '`', start)
+  while (backtick !== -1 && backtick < position) {
+    const openEnd = backtickRunEnd(source, backtick)
+    const length = openEnd - backtick
+    const closing = closingBacktickRun(source, openEnd, length)
+    const end = closing === -1 ? openEnd : closing + length
+    if (position < end) position = findUnescaped(source, marker, end)
+    backtick = findUnescaped(source, '`', end)
+  }
+  return position
+}
+
 function scanStrong(state: ParserState, marker: number): boolean {
   const start = state.pos
   const markerStr = String.fromCharCode(marker)
@@ -698,7 +724,7 @@ function scanStrong(state: ParserState, marker: number): boolean {
   }
 
   // Find closing marker
-  const closePos = state.src.indexOf(markerStr + markerStr, searchStart)
+  const closePos = findInlineDelimiter(state.src, markerStr + markerStr, searchStart)
   if (closePos === -1) {
     return false
   }
@@ -741,11 +767,11 @@ function scanEmphasisDirect(state: ParserState, marker: number): boolean {
   }
 
   // Find closing marker (make sure it's not a double marker)
-  let closePos = state.src.indexOf(markerStr, searchStart)
+  let closePos = findInlineDelimiter(state.src, markerStr, searchStart)
   while (closePos !== -1) {
     // Make sure it's not a double marker
     if (state.src.charCodeAt(closePos + 1) === marker) {
-      closePos = state.src.indexOf(markerStr, closePos + 2)
+      closePos = findInlineDelimiter(state.src, markerStr, closePos + 2)
       continue
     }
 
@@ -754,7 +780,7 @@ function scanEmphasisDirect(state: ParserState, marker: number): boolean {
       const nextChar = closePos + 1 < state.posMax ? state.src.charCodeAt(closePos + 1) : 0
       // If followed by alphanumeric or underscore, keep searching
       if (isAlphanumeric(nextChar) || nextChar === 95) {
-        closePos = state.src.indexOf(markerStr, closePos + 1)
+        closePos = findInlineDelimiter(state.src, markerStr, closePos + 1)
         continue
       }
     }
@@ -780,22 +806,38 @@ function scanEmphasisDirect(state: ParserState, marker: number): boolean {
   return true
 }
 
-function scanCode(state: ParserState): boolean {
-  const start = state.pos
-  state.pos++ // skip opening `
+function backtickRunEnd(source: string, start: number): number {
+  let end = start + 1
+  while (source.charCodeAt(end) === CODE_BACKTICK) end++
+  return end
+}
 
-  const codeStart = state.pos
-  const closeIdx = state.src.indexOf('`', state.pos)
+function closingBacktickRun(source: string, start: number, length: number): number {
+  let opening = source.indexOf('`', start)
+  while (opening !== -1) {
+    const end = backtickRunEnd(source, opening)
+    if (end - opening === length) return opening
+    opening = source.indexOf('`', end)
+  }
+  return -1
+}
+
+function scanCode(state: ParserState): void {
+  const start = state.pos
+  const codeStart = backtickRunEnd(state.src, start)
+  const length = codeStart - start
+  const closeIdx = closingBacktickRun(state.src, codeStart, length)
   if (closeIdx === -1) {
-    state.pos = start
-    return false
+    state.pending += state.src.slice(start, codeStart)
+    state.pos = codeStart
+    return
   }
 
-  const code = state.src.slice(codeStart, closeIdx)
+  let code = state.src.slice(codeStart, closeIdx).replace(/\n/g, ' ')
+  if (code.startsWith(' ') && code.endsWith(' ') && /[^ ]/.test(code)) code = code.slice(1, -1)
   pushToken(state, 'code_inline', 'code', 0).content = code
 
-  state.pos = closeIdx + 1
-  return true
+  state.pos = closeIdx + length
 }
 
 function scanLink(state: ParserState): boolean {
@@ -803,7 +845,7 @@ function scanLink(state: ParserState): boolean {
   state.pos++ // skip [
 
   const textStart = state.pos
-  const textEnd = state.src.indexOf(']', state.pos)
+  const textEnd = findInlineDelimiter(state.src, ']', state.pos)
   if (textEnd === -1) {
     state.pos = start
     return false
@@ -854,7 +896,7 @@ function scanImage(state: ParserState): boolean {
   state.pos += 2 // skip ![
 
   const altStart = state.pos
-  const altEnd = state.src.indexOf(']', state.pos)
+  const altEnd = findInlineDelimiter(state.src, ']', state.pos)
   if (altEnd === -1) {
     state.pos = start
     return false
@@ -895,7 +937,7 @@ function scanStrikethrough(state: ParserState): boolean {
   state.pos += 2 // skip ~~
 
   const textStart = state.pos
-  const closeIdx = state.src.indexOf('~~', state.pos)
+  const closeIdx = findInlineDelimiter(state.src, '~~', state.pos)
   if (closeIdx === -1) {
     state.pos = start
     return false

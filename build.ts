@@ -11,4 +11,11 @@ await Bun.build({
   plugins: [plugin()],
 })
 
+await Bun.build({
+  entrypoints: ['./bin/cli.ts'],
+  outdir: './dist/bin',
+  target: 'bun',
+  format: 'esm',
+})
+
 console.log('Build complete!')

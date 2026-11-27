@@ -2,6 +2,35 @@ import { describe, expect, it } from 'bun:test'
 import { parse } from '../src/parser'
 
 describe('markdown parser - edge cases', () => {
+  it('keeps leading digits in prose that has no ordered list marker', () => {
+    expect(parse('2024 release notes')).toBe('<p>2024 release notes</p>\n')
+    expect(parse('1.5x faster')).toBe('<p>1.5x faster</p>\n')
+    expect(parse('1\\. not a list')).toBe('<p>1. not a list</p>\n')
+    expect(parse('1. first item\n2.5x faster\n2024 release notes')).toBe('<ol>\n<li>first item</li>\n</ol>\n<p>2.5x faster\n2024 release notes</p>\n')
+    expect(parse('- first item\n-unchanged')).toBe('<ul>\n<li>first item</li>\n</ul>\n<p>-unchanged</p>\n')
+  })
+
+  it('renders escaped punctuation literally without swallowing other backslashes', () => {
+    expect(parse('\\*not emphasis\\*')).toBe('<p>*not emphasis*</p>\n')
+    expect(parse('\\[not a link](https://example.com)')).toBe('<p>[not a link](https://example.com)</p>\n')
+    expect(parse('a *real \\* emphasis* and **real \\** strong**')).toBe('<p>a <em>real * emphasis</em> and <strong>real ** strong</strong></p>\n')
+    expect(parse('path \\folder and \\<tag\\>')).toBe('<p>path \\folder and &lt;tag&gt;</p>\n')
+    expect(parse('[a\\]b](https://example.test)')).toBe('<p><a href="https://example.test">a]b</a></p>\n')
+    expect(parse('~~not \\~~ finished~~')).toBe('<p><del>not ~~ finished</del></p>\n')
+    expect(parse('first\\\nsecond')).toBe('<p>first<br>second</p>\n')
+  })
+
+  it('matches whole backtick runs and applies code-span whitespace rules', () => {
+    expect(parse('`` a ` b ``')).toBe('<p><code>a ` b</code></p>\n')
+    expect(parse('``  a ` b  ``')).toBe('<p><code> a ` b </code></p>\n')
+    expect(parse('`  `')).toBe('<p><code>  </code></p>\n')
+    expect(parse('``  a\r\n` b ``')).toBe('<p><code> a ` b</code></p>\n')
+    expect(parse('`` unmatched `')).toBe('<p>`` unmatched `</p>\n')
+    expect(parse('`` \\* ` ``')).toBe('<p><code>\\* `</code></p>\n')
+    expect(parse('**outer `` a ** ` b `` text**')).toBe('<p><strong>outer <code>a ** ` b</code> text</strong></p>\n')
+    expect(parse('| Code | Value |\n| --- | --- |\n| `` a ` | b `` | yes |')).toContain('<td><code>a ` | b</code></td>\n<td>yes</td>')
+  })
+
   it('should handle empty input', () => {
     expect(parse('')).toBe('')
     // Whitespace-only might produce empty paragraphs or nothing
